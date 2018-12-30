@@ -2,7 +2,7 @@
 # x = [12, 9, 3, 8]
 
 # TODO(aviv): Automate the testing.
-# I verified that when I break this function, running amotzsort([9, 4, 9, 2]) fails with an assersion error.
+# I verified that when I break this function, running amotzsort([9, 4, 9, 2]) fails with an assertion error.
 def isSorted(array):
     return all(array[i] <= array[i + 1] for i in range(len(array) - 1))
 
