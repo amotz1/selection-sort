@@ -6,6 +6,7 @@
 def isSorted(array):
     return all(array[i] <= array[i + 1] for i in range(len(array) - 1))
 
+
 # [aviv] I'm not sure what this function does, but it doesn't sort the input correctly.
 def amotzsort(x):
     print(x)
