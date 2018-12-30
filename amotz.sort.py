@@ -1,6 +1,11 @@
 # aviv. Removing this. It's unused.
 # x = [12, 9, 3, 8]
 
+# TODO(aviv): Automate the testing.
+# I verified that when I break this function, running amotzsort([9, 4, 9, 2]) fails with an assersion error.
+def isSorted(array):
+    return all(array[i] <= array[i + 1] for i in range(len(array) - 1))
+
 
 def amotzsort(x):
     print(x)
@@ -25,6 +30,8 @@ def amotzsort(x):
     a = 2
     b = x.index(count)
     x[a], x[b] = x[b], x[a]
+    # The assertion below fails
+    # assert isSorted(x)
     print(x)
 
 
@@ -62,6 +69,7 @@ def sortinglist(x):
         print("a=", a)
         x[a], x[b] = x[b], x[a]
         print("the array is=", x)
+    assert isSorted(x)
     return (x)
 
 
