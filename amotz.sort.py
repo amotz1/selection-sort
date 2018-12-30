@@ -6,7 +6,7 @@
 def isSorted(array):
     return all(array[i] <= array[i + 1] for i in range(len(array) - 1))
 
-
+# [aviv] I'm not sure what this function does, but it doesn't sort the input correctly.
 def amotzsort(x):
     print(x)
     count = x[0]
@@ -38,8 +38,10 @@ def amotzsort(x):
 amotzsort([3, 1, 1, 3])
 
 
+# [aviv] I'm not sure what this function does. It doesn't return anything, and it isn't used anywhere.
 def findingmax(x):
     for i1 in range(0, len(x)):
+        # [aviv] "count" is not a good name for this variable.
         count = x[i1]
         for i in range(i1, len(x)):
             if count > x[i]:
@@ -54,6 +56,7 @@ def sortinglist(x):
     print("the array is=", x)
     for i1 in range(0, len(x)):
         print("i1=", i1)
+        # [aviv] "count" is not a good name for this variable.
         count = x[i1]
         print("count=", count)
         for i in range(i1, len(x)):
