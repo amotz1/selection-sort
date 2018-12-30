@@ -1,6 +1,7 @@
 # aviv. Removing this. It's unused.
 # x = [12, 9, 3, 8]
 
+
 # TODO(aviv): Automate the testing.
 # I verified that when I break this function, running amotzsort([9, 4, 9, 2]) fails with an assertion error.
 def isSorted(array):
