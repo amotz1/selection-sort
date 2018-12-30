@@ -1,4 +1,5 @@
-x = [12, 9, 3, 8]
+# aviv. Removing this. It's unused.
+# x = [12, 9, 3, 8]
 
 
 def amotzsort(x):
