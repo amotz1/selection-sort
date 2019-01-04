@@ -4,7 +4,8 @@
 
 # TODO(aviv): Automate the testing.
 # I verified that when I break this function, running amotzsort([9, 4, 9, 2]) fails with an assertion error.
-# [amotz] you are right, this function is not relevant and was part f my thinking process, i change the name now for preliminarytest
+# [amotz] you are right, this function is not relevant and was part
+# of my thinking process, i changed the name of the function to preliminarytest
 def isSorted(array):
     return all(array[i] <= array[i + 1] for i in range(len(array) - 1))
 
@@ -40,16 +41,22 @@ def preliminarytest(x):
 
 
 # [aviv] I'm not sure what this function does. It doesn't return anything, and it isn't used anywhere.
-# [amotz] this function is suppose to find a maximum of arrays
-# that reduce in size by 1 but it was also part of my thinking proccess and is not relevant, i changed the name to findingmaxtest1
-def findingmaxtest1(x):
+# [amotz] this function is suppose to find a min of arrays
+# that reduce in size by 1 each iteration of the for loop
+# (so if for example it takes an array [7,8,1] it prints 1
+# and then it takes the array [8,1] and it also prints 1  and so on.
+# it was also part of my thinking process and is not relevant, i changed the name to findingmintest1
+
+def findingmintest1(x):
     for i1 in range(0, len(x)):
         # [aviv] "count" is not a good name for this variable.
-        count = x[i1]
+        # [amotz] changed the variable name to findingmin
+        findingmin = x[i1]
+
         for i in range(i1, len(x)):
-            if count > x[i]:
-                count = x[i]
-        print(count)
+            if findingmin > x[i]:
+                findingmin = x[i]
+        print(findingmin)
 
 
 # [amotz] this is the actual function and as you can see below, it produce True for various arrays
@@ -59,6 +66,7 @@ def amotzsort(x):
     for i1 in range(0, len(x)):
         # print("i1=", i1)
         # [aviv] "count" is not a good name for this variable.
+        # [amotz] i changed the name of the variable to findingmin, because that what it does in the program
         findingmin = x[i1]
         # print("count=", count)
         for i in range(i1, len(x)):
