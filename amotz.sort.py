@@ -4,16 +4,13 @@
 
 # TODO(aviv): Automate the testing.
 # I verified that when I break this function, running amotzsort([9, 4, 9, 2]) fails with an assertion error.
-#[amotz] you are right, this function is not relevant and was part f my thinking process, i change the name now for preliminarytest
+# [amotz] you are right, this function is not relevant and was part f my thinking process, i change the name now for preliminarytest
 def isSorted(array):
     return all(array[i] <= array[i + 1] for i in range(len(array) - 1))
 
 
-
-
-
 # [aviv] I'm not sure what this function does, but it doesn't sort the input correctly.
-#[amotz] this function was part of my thought process and is indeed not relevant.
+# [amotz] this function was part of my thought process and is indeed not relevant.
 def preliminarytest(x):
     print(x)
     count = x[0]
@@ -55,29 +52,28 @@ def findingmaxtest1(x):
         print(count)
 
 
-
 # [amotz] this is the actual function and as you can see below, it produce True for various arrays
 # that are tested with your function isSorted, i changed the name for amotzsort to reduce confusion
 def amotzsort(x):
-    #print("the array is=", x)
+    # print("the array is=", x)
     for i1 in range(0, len(x)):
-        #print("i1=", i1)
+        # print("i1=", i1)
         # [aviv] "count" is not a good name for this variable.
-        count = x[i1]
-        #print("count=", count)
+        findingmin = x[i1]
+        # print("count=", count)
         for i in range(i1, len(x)):
-          #  print("i=", i)
-         #   print("x[i]=", x[i])
-            if count > x[i]:
-                count = x[i]
+            #  print("i=", i)
+            #   print("x[i]=", x[i])
+            if findingmin > x[i]:
+                findingmin = x[i]
         #        print("x.index(count,i1,len(x))=", x.index(count, i1, len(x)))
-        #print("count=", count)
+        # print("count=", count)
         a = i1
-        b = x.index(count, i1, len(x))
-        #print("b=", b)
-        #print("a=", a)
+        b = x.index(findingmin, i1, len(x))
+        # print("b=", b)
+        # print("a=", a)
         x[a], x[b] = x[b], x[a]
-        #print("the array is=", x)
+        # print("the array is=", x)
     assert isSorted(x)
     return (x)
 
