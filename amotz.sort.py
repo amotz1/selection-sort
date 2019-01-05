@@ -143,6 +143,7 @@ test1()
 
 # This function is just to here demonstrate that amotzsort changes the input and returns a reference (like a "pointer")
 # to the input.
+# TODO(amotz): Feel invited to delete this function after you feel like you understand what's going on here.
 def demoInputChanges():
     x = [2, 1, 3]
     print("x=", x)
