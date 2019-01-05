@@ -1,5 +1,3 @@
-# aviv. Removing this. It's unused.
-# x = [12, 9, 3, 8]
 
 
 # TODO(aviv): Automate the testing.
@@ -40,8 +38,7 @@ def preliminarytest(x):
     print(x)
 
 
-# [aviv] I'm not sure what this function does. It doesn't return anything, and it isn't used anywhere.
-# [amotz] this function is suppose to find a min of arrays
+# This function is suppose to find a min of arrays
 # that reduce in size by 1 each iteration of the for loop
 # (so if for example it takes an array [7,8,1] it prints 1
 # and then it takes the array [8,1] and it also prints 1  and so on.
@@ -59,14 +56,12 @@ def findingmintest1(x):
         print(findingmin)
 
 
-# [amotz] this is the actual function and as you can see below, it produce True for various arrays
+# This is the actual function and as you can see below, it produce True for various arrays
 # that are tested with your function isSorted, i changed the name for amotzsort to reduce confusion
 def amotzsort(x):
     # print("the array is=", x)
     for i1 in range(0, len(x)):
         # print("i1=", i1)
-        # [aviv] "count" is not a good name for this variable.
-        # [amotz] i changed the name of the variable to findingmin, because that what it does in the program
         findingmin = x[i1]
         # print("count=", count)
         for i in range(i1, len(x)):
