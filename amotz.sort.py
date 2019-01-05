@@ -2,14 +2,11 @@
 
 # TODO(aviv): Automate the testing.
 # I verified that when I break this function, running amotzsort([9, 4, 9, 2]) fails with an assertion error.
-# [amotz] you are right, this function is not relevant and was part
-# of my thinking process, i changed the name of the function to preliminarytest
 def isSorted(array):
     return all(array[i] <= array[i + 1] for i in range(len(array) - 1))
 
 
-# [aviv] I'm not sure what this function does, but it doesn't sort the input correctly.
-# [amotz] this function was part of my thought process and is indeed not relevant.
+# [amotz] (this function is indeed not relevant or used.
 def preliminarytest(x):
     print(x)
     count = x[0]
@@ -43,7 +40,6 @@ def preliminarytest(x):
 # (so if for example it takes an array [7,8,1] it prints 1
 # and then it takes the array [8,1] and it also prints 1  and so on.
 # it was also part of my thinking process and is not relevant, i changed the name to findingmintest1
-
 def findingmintest1(x):
     for i1 in range(0, len(x)):
         # [aviv] "count" is not a good name for this variable.
@@ -80,9 +76,59 @@ def amotzsort(x):
     assert isSorted(x)
     return (x)
 
+# This implements "bubble sort"
+# Iterate through the array comparing adjacent pairs; in case they're not in order, swap the pair.
+# Continue until no pairs need swapping
+def bubbleSort(x):
+    swapped = True
+    while swapped:
+        swapped = False
+        for i in range (0, max(0, len(x) - 1)):
+            j = i + 1
+            if x[i] > x[j]:
+                temp = x[i]  # type: object
+                x[i] = x[j]
+                x[j] = temp
+                swapped = True
+            # print(i, x)
+
 
 print(isSorted(amotzsort([3, 5, 11, 3, 13])))
 print(isSorted(amotzsort([7, 8, 7, 9, 5, 2])))
 print(isSorted(amotzsort([6, 8, 8, 5, 4, 3])))
 print(isSorted(amotzsort([6, 8, 9, 9, 4, 3])))
 print(isSorted(amotzsort([8, 6, 6, 6, 9, 3, 2, 1, 2])))
+
+print("*********************************************************************************************")
+
+# Runs different sort functions (currenly amotsSort and bubbleSort) on several inputs.
+# Prints the input and the sorted result.
+# Asserts that the result is sorted.
+def test1():
+    # TODO(aviv): Improve testing. While developing bubbleSort, I had a bug where sorting [1, 2, 3] resulted in
+    #  [3, 3, 3]. Just using isSorted did not catch ths bug as the result is sorted but has the wrong elements.
+    # One way to achieve this would be to verify that all of our sort functions end up with the same result or maybe
+    # just compare to the built-in Python sort(). Doing this will require some restructuring as our sort functions sort
+    # in place (that is, they modify the input rather than returning a sorted copy).
+    for testFunction in [amotzsort, bubbleSort]:
+        print ("testing function: ", testFunction)
+        testCases = [[3, 5, 11, 3, 13],
+                     [7, 8, 7, 9, 5, 2],
+                     [6, 8, 8, 5, 4, 3],
+                     [6, 8, 9, 9, 4, 3],
+                     [8, 6, 6, 6, 9, 3, 2, 1, 2],
+                     # Some boundary cases:
+                     [1, 2, 3], # an already sorted list
+                     [3, 2, 1], # a list in reverse order
+                     [], # empty test case (length 0)
+                     [1], # test case of length 1
+                     [1, 1, 1]] # test case with all elements equal
+
+        for testCase in testCases:
+            print("in\t", testCase)
+            testFunction(testCase)
+            print("out\t", testCase)
+            assert (isSorted(testCase))
+            print()
+
+test1()
