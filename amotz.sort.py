@@ -132,3 +132,21 @@ def test1():
             print()
 
 test1()
+
+
+# This function is just to here demonstrate that amotzsort changes the input and returns a reference (like a "pointer")
+# to the input.
+def demoInputChanges():
+    x = [2, 1, 3]
+    print("x=", x)
+    print("y = amotzsort(x)")
+    y = amotzsort(x)
+    print("x=", x)
+    print("y=", y)
+    y[1] = 17
+    print("y[1] = 17")
+    print("x=", x)
+    print("y=", y)
+
+
+demoInputChanges()
