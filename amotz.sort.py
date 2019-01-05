@@ -92,6 +92,13 @@ def bubbleSort(x):
                 swapped = True
             # print(i, x)
 
+# This function does not sort, rather it just overwrites the input with unrelated sorted values.
+# This broken sort currently passes our tests.
+# TODO(aviv): Make our tests fail this function.
+def brokenSort(x):
+    for i in range (0, len(x)):  # type: int
+        x[i] = 101 + i
+
 
 print(isSorted(amotzsort([3, 5, 11, 3, 13])))
 print(isSorted(amotzsort([7, 8, 7, 9, 5, 2])))
@@ -110,7 +117,7 @@ def test1():
     # One way to achieve this would be to verify that all of our sort functions end up with the same result or maybe
     # just compare to the built-in Python sort(). Doing this will require some restructuring as our sort functions sort
     # in place (that is, they modify the input rather than returning a sorted copy).
-    for testFunction in [amotzsort, bubbleSort]:
+    for testFunction in [amotzsort, bubbleSort, brokenSort]:
         print ("testing function: ", testFunction)
         testCases = [[3, 5, 11, 3, 13],
                      [7, 8, 7, 9, 5, 2],
