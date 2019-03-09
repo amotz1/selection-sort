@@ -4,6 +4,9 @@
 # 3) i changed amotzisSorted so it is now failing your brokensort test and successfully test all our sorting test functions except mergesort that i still didnt work with yet.
 # 4) i made  a function that test the amotzisSorted function name test_amotzisSorted.
 
+# [Aviv] Naming.... Try to use camel case, capital letters, and underscores in a consistent way. I'm not sure
+# what the typical Python naming conventions are, but regardless "amotzisSorted" should be "amotzIsSorted"
+
 
 def swap(list, index1, index2):
     temp = list[index2]
@@ -32,6 +35,9 @@ def quicksort(list, start, end):
     return list
 
 
+# [Aviv] It's bad form to have 2 functions that differ only by case (quicksort, Quicksort). I think that both could be
+# named "quicksort". If one of them needs to have a strange name, then make that the private one, not the one that
+# would typically be used by users.
 # [amotz] this function take a list and use quicksort function with a list and 0 and len(list)-1 as arguments for convinience of use
 def Quicksort(list):
     quicksort(list, 0, len(list) - 1)
@@ -67,6 +73,8 @@ def bubbleSort(x):
             # print(i, x)
 
 
+# [aviv] I think that a lot of this old garbage can be cleaned out. Use a test that's correct (compares to Python sort)
+# and get rid of the old history of our learning what's incorrect.
 # This function does not sort, rather it just overwrites the input with unrelated sorted values.
 # This broken sort currently passes our tests.
 # TODO(aviv): Make our tests fail this function.
@@ -96,6 +104,9 @@ def test_copy():
 test_copy()
 
 
+# [aviv] This function name is not good. This function tests that a supplied test function sorts a supplied list
+# correctly. If it's too difficult to name this function, then it might not be a good function.
+# I'd rename it to: testSortFunctionOnList(sortFunction, list)
 # [amotz]  amotzisSOrted takes  a list as an argument make a copy of the list with the use of the function copy_of_list and put the copy in a variable name copyoflist.
 # then it use a testfunction to sort the list and check if sorting the copy of our list with python sort gives the same results as our test function on the original list.
 # if it produce the same results it returns True and if its not it returns False.
