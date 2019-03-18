@@ -34,3 +34,4 @@ for i in range(len(array)):
     sum1 = sum1 + array[i]
 average = sum1/len(array)
 print("the average time is", average)
+
