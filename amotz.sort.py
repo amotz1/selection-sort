@@ -5,7 +5,6 @@ import time
 from math import ceil, floor
 from typing import List
 
-
 def mergefragments(listl, listr):
     length_listl = len(listl)
     length_listr = len(listr)
