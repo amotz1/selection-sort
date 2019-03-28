@@ -1,6 +1,76 @@
 import random
 import timeit
+import sys
+import time
+from math import ceil, floor
+from typing import List
 
+
+def mergefragments(listl, listr):
+    length_listl = len(listl)
+    length_listr = len(listr)
+    united = [None] * (length_listl + length_listr)
+    index_l = 0
+    index_r = 0
+    index_united = 0
+    while listl and listr:
+        if listl[index_l] <= listr[index_r]:
+            united[index_united] = listl[index_l]
+            del listl[index_l]
+            index_united = index_united + 1
+        else:
+            united[index_united] = listr[index_r]
+            index_united = index_united + 1
+            del listr[index_r]
+    assert listl or listr, \
+        'One of the lists should have elements remaining. ' \
+        '(The while loop above stops running when one lists runs out of elemnts.)'
+    if listl:
+        for i in range(len(listl)):
+            united[index_united] = listl[i]
+            index_united = index_united + 1
+    else:
+        for i in range(len(listr)):
+            united[index_united] = listr[i]
+            index_united = index_united + 1
+    return united
+
+
+# [amotz] this is the listsplitter function, again working.
+# [Aviv] I'd rename this to be a verb, so for example, splitLists
+# [Aviv] I'm not sure how these return value "hints" work, but I added this, and it didn't seem to break anything.
+def split_lists(list) -> List[List[int]]:
+    n = len(list)
+    mid = n / 2  # [Aviv] I would move the floor function to here and not use it below.
+    listl = [None] * int(floor(mid))
+    listr = [None] * int(ceil((n - mid)))
+    for i in range(0, int(floor(mid))):
+        listl[i] = list[i]
+    if not mid.is_integer():
+        for i in range(0, int(ceil((n - mid)))):
+            listr[i] = list[int(ceil((n / 2) + i - 1))]
+    else:
+        for i in range(0, int(ceil((n - mid)))):
+            listr[i] = list[int(ceil((n / 2) + i))]
+    return listl, listr
+
+
+def mergeSort(list: int) -> List[int]:
+    if len(list) < 2:
+        return list
+    # [Aviv]. Sorry, I got carried away. Since the function above returns 2 things (which is a rare language feature)
+    # I chnaged the usage of it here to assign 2 things. (above says "return a, b", and so here I say "a, b = call()"
+    unsortedLeft, unsortedRight = split_lists(list)
+    sortedLeft = mergeSort(unsortedLeft)
+    sortedRight = mergeSort(unsortedRight)
+    mergeSorted = mergefragments(sortedLeft, sortedRight)
+    return mergeSorted
+
+# this is the mergesort_inplace function that i added, it takes a list and then use mergeSort to sort it saving it in list1 variable and then changing the original list to the value in list1 to get a sort list in place
+def mergesort_inplace(list):
+    list1 = mergeSort(list)
+    list = list1
+    return list
 
 # [Aviv] Naming.... Try to use camel case, capital letters, and underscores in a consistent way. I'm not sure
 # what the typical Python naming conventions are, but regardless "amotzisSorted" should be "amotzIsSorted"
@@ -118,7 +188,7 @@ def testing_sort_functions():
                  [7, 8, 7, 9, 5, 2],
                  [6, 8, 8, 5, 4, 3],
                  [8, 6, 6, 6, 9, 3, 2, 1, 2]]
-    sortfunctions = [amotzsort, bubbleSort, quicksort]
+    sortfunctions = [amotzsort, bubbleSort, quicksort, mergesort_inplace ]
     for testcase in testcases:
         for sortfunction in sortfunctions:
             assert (test_sort_function_on_list(sortfunction, testcase) == True)
@@ -167,8 +237,16 @@ def test_average_of_list():
         print('in', testcase, 'out', average_of_list(testcase))
 
 
-test_average_of_list()
+def generating_list(size):
+    list = []
+    while len(list) < size:
+        list.append(generating_random_number())
+    return list
+def test_generating_list():
+    list = generating_list (20)
+    assert (len(list) == 20)
 
+test_generating_list()
 
 # [amotz] this is the time measurement function, it takes no arguments. it will use two while loops with two separate counters.
 # in the inner loop we will make 10 time measurements with each sort function on a list with 2000 elements.
@@ -176,10 +254,10 @@ test_average_of_list()
 # and append it to a list with the name of each sort function.
 # we will then return a list with the name of the sort function and the average of 10 time measurments of that sort function on a list with 2000 elements.
 def time_measurment_test():
-    sort_functions = [amotzsort, bubbleSort, quicksort]
+    sort_functions = [amotzsort, bubbleSort, quicksort, mergesort_inplace]
     count = 0
     results1 = []
-    while count < 3:
+    while count < len(sort_functions):
         count1 = 0
         results = []
         while count1 < 10:
@@ -193,5 +271,36 @@ def time_measurment_test():
         count = count + 1
     return results1
 
-
+# this is the timemeasurement function that you recommended, it takes  no parameters. it is built according
+# to your recommendations in the mail, i use a while True loop and then a for loop that loop through our sort functions.
+# it check the time it takes for each algorithm to run on different size lists using a new function that i created called generating_list that takes a size parameter and generating a list in that size. then it check also weather the time it took to the algorithm to run is more then 5 seconds and if it is it drops the sort_function as you said.
+#i used another if codindition to check if the lentgh of the sort_functions list is less then 1 and in this case instead of deleting another item in the list it just exit the program if not i double the size of the list
+def timemeasurment_test2 ():
+    sort_functions = [amotzsort, bubbleSort, quicksort, mergesort_inplace]
+    size = 10
+    while True:
+        count = 0
+        print ("\n",size,"random elements in the list","\n")
+        for sort_function in sort_functions:
+            list = generating_list(size)
+            start = timeit.default_timer()
+            sort_function(list)
+            time = timeit.default_timer() - start
+            print (time, sort_function.__name__)
+            count = count + 1
+            if time > 20:
+                print ("we dropped", sort_function.__name__)
+                if len (sort_functions) == 1:
+                    print ("and the winner is... *drum rolls* ",sort_function.__name__,"!!!!!")
+                    del sort_functions[count-1]
+                    sys.exit (0)
+                del sort_functions[count-1]
+                count = 0
+                continue
+        size = size*2
+print("first of all the old test of checking how much time it takes for each algorithm including mergesort to sort a list of 2000 elements")
+time.sleep (5)
 print(time_measurment_test())
+print ("now the last algorithm standing competition is about to take place!")
+time.sleep (15)
+timemeasurment_test2()
