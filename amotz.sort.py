@@ -213,6 +213,16 @@ def __testing_sort_functions():
             assert (__test_sort_function_on_list(sortfunction, testcase))
 
 
+def YotamTest ():
+    print("in YotamTest")
+    data = [2, 1, 3]
+    correctlySortedData = sorted(data)
+    mergesort(data)
+    if (data != correctlySortedData):
+        print("failed! Got: %s", data)
+
+YotamTest()
+
 __testing_sort_functions()
 
 
