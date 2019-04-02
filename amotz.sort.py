@@ -22,9 +22,7 @@ def __mergefragments(listl, listr):
             united[index_united] = listr[index_r]
             index_united = index_united + 1
             del listr[index_r]
-    assert listl or listr, \
-        'One of the lists should have elements remaining. ' \
-        '(The while loop above stops running when one lists runs out of elemnts.)'
+    assert listl or listr
     if listl:
         for i in range(len(listl)):
             united[index_united] = listl[i]
@@ -36,10 +34,7 @@ def __mergefragments(listl, listr):
     return united
 
 
-# [amotz] this is the listsplitter function, again working.
-# [Aviv] I'd rename this to be a verb, so for example, splitLists
-# [Aviv] I'm not sure how these return value "hints" work, but I added this, and it didn't seem to break anything.
-# [amotz] renamed it split_lists
+#
 def __split_lists(list) -> List[List[int]]:
     n = len(list)
     mid = n / 2  # [Aviv] I would move the floor function to here and not use it below.
@@ -56,23 +51,40 @@ def __split_lists(list) -> List[List[int]]:
     return listl, listr
 
 
-def __mergeSort(list: int) -> List[int]:
+def __mergesort(list: int) -> List[int]:
     if len(list) < 2:
         return list
     # [Aviv]. Sorry, I got carried away. Since the function above returns 2 things (which is a rare language feature)
     # I chnaged the usage of it here to assign 2 things. (above says "return a, b", and so here I say "a, b = call()"
     unsortedLeft, unsortedRight = __split_lists(list)
-    sortedLeft = __mergeSort(unsortedLeft)
-    sortedRight = __mergeSort(unsortedRight)
+    sortedLeft = __mergesort(unsortedLeft)
+    sortedRight = __mergesort(unsortedRight)
     mergeSorted = __mergefragments(sortedLeft, sortedRight)
     return mergeSorted
 
 
 # this is the mergesort_inplace function that i added, it takes a list and then use mergeSort to sort it saving it in list1 variable and then changing the original list to the value in list1 to get a sort list in place
-def mergesort_inplace(list):
-    list1 = __mergeSort(list)
-    list = list1
+def mergesort(list):
+    sorted_list = __mergesort(list)
+    list = sorted_list
     return list
+
+
+def mergesort_test_test(list):
+    sorted_list = __mergesort(list)
+    list = sorted_list
+    print (list, "is list the same object as sorted_list?", list is sorted_list)
+
+
+def mergesort_test(list):
+    sorted_list = __mergesort(list)
+    for element in range(len(sorted_list)):
+        list[element] = sorted_list[element]
+    print(list, "is list the same object as sorted_list?", list is sorted_list)
+
+
+mergesort_test([3, 2, 1])
+mergesort_test_test([3, 2, 1])
 
 
 def __swap(list, index1, index2):
@@ -135,7 +147,8 @@ def bubbleSort(x):
                 x[i] = x[j]
                 x[j] = temp
                 swapped = True
-            # print(i, x)
+    return x
+    # print(i, x)
 
 
 # [amotz] copy_of_list takes a list as an argument and return a copy of the list. first it creates a list with the same number of empty elements as the argument list.
@@ -160,29 +173,44 @@ __test_copy()
 
 def __test_sort_function_on_list(sort_function, list):
     copyoflist = __copy_of_list(list)
-    sort_function(list)
+    print ("is copy of list the same object as list?", copyoflist is list)
+    list = sort_function(list)
     if sorted(copyoflist) == list:
         return True
     else:
         return False
 
 
+def __test_sort_function_on_list1(sort_function, list):
+    copyoflist = __copy_of_list(list)
+    print ("is copyoflist the same object as list?", copyoflist is list)
+    list = sort_function(list)
+    if sorted(copyoflist) == list:
+        return True
+    else:
+        return False
+
+
+__test_sort_function_on_list1(mergesort, [3, 2, 1])
+
+
 # [amotz] this function doesn't take any arguments, it make test cases to check if our functions sort them correctly.
 # it uses a loop over all the test cases and all our test functions and check if the functions that suppose to work work.
 def __testing_sort_functions():
-    testcases = [[3, 2, 1],
-                 [4, 4],
-                 [4, 5, 6],
-                 [],
-                 [1, 1],
-                 [3, 5, 11, 3, 13],
-                 [7, 8, 7, 9, 5, 2],
-                 [6, 8, 8, 5, 4, 3],
-                 [8, 6, 6, 6, 9, 3, 2, 1, 2]]
-    sortfunctions = [amotzsort, bubbleSort, quicksort, mergesort_inplace]
-    for testcase in testcases:
-        for sortfunction in sortfunctions:
-            assert (__test_sort_function_on_list(sortfunction, testcase) == True)
+    sortfunctions = [amotzsort, bubbleSort, quicksort, mergesort]
+    for sortfunction in sortfunctions:
+        testcases = [[3, 2, 1],
+                     [4, 4],
+                     [4, 5, 6],
+                     [],
+                     [1, 1],
+                     [3, 5, 11, 3, 13],
+                     [7, 8, 7, 9, 5, 2],
+                     [6, 8, 8, 5, 4, 3],
+                     [8, 6, 6, 6, 9, 3, 2, 1, 2]]
+        for testcase in testcases:
+            print ("testcase is", testcase, "out", sortfunction(testcase), "testcase for", sortfunction.__name__)
+            assert (__test_sort_function_on_list(sortfunction, testcase))
 
 
 __testing_sort_functions()
@@ -249,7 +277,7 @@ __test_generating_list()
 # and append it to a list with the name of each sort function.
 # we will then return a list with the name of the sort function and the average of 10 time measurments of that sort function on a list with 2000 elements.
 def time_measurment_test():
-    sort_functions = [amotzsort, bubbleSort, quicksort, mergesort_inplace]
+    sort_functions = [amotzsort, bubbleSort, quicksort, mergesort]
     count = 0
     results1 = []
     while count < len(sort_functions):
@@ -272,7 +300,7 @@ def time_measurment_test():
 # it check the time it takes for each algorithm to run on different size lists using a new function that i created called generating_list that takes a size parameter and generating a list in that size. then it check also weather the time it took to the algorithm to run is more then 5 seconds and if it is it drops the sort_function as you said.
 # i used another if codindition to check if the lentgh of the sort_functions list is less then 1 and in this case instead of deleting another item in the list it just exit the program if not i double the size of the list
 def timemeasurment_test2():
-    sort_functions = [amotzsort, bubbleSort, quicksort, mergesort_inplace]
+    sort_functions = [amotzsort, bubbleSort, quicksort, mergesort]
     size = 10
     while True:
         count = 0
@@ -284,7 +312,7 @@ def timemeasurment_test2():
             time1 = timeit.default_timer() - start
             print (time1, sort_function.__name__)
             count = count + 1
-            if time1 > 20:
+            if time1 > 3:
                 print ("\n", "we dropped", sort_function.__name__, "\n")
                 time.sleep(3)
                 if len(sort_functions) == 1:
