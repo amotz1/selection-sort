@@ -66,8 +66,9 @@ def __mergesort(list: int) -> List[int]:
 # this is the mergesort_inplace function that i added, it takes a list and then use mergeSort to sort it saving it in list1 variable and then changing the original list to the value in list1 to get a sort list in place
 def mergesort(list):
     sorted_list = __mergesort(list)
-    list = sorted_list
-    return list
+    for element in range(len(sorted_list)):
+        list[element] = sorted_list[element]
+
 
 
 def mergesort_test_test(list):
@@ -84,7 +85,7 @@ def mergesort_test(list):
 
 
 mergesort_test([3, 2, 1])
-mergesort_test_test([3, 2, 1])
+mergesort_test_test([3 , 2, 1])
 
 
 def __swap(list, index1, index2):
@@ -121,7 +122,7 @@ def __quicksort(list, start, end):
 # changed the name of Quicksort to quicksort
 def quicksort(list):
     __quicksort(list, 0, len(list) - 1)
-    return list
+
 
 
 def amotzsort(list):
@@ -133,7 +134,7 @@ def amotzsort(list):
         a = i1
         b = list.index(findingmin, i1, len(list))
         list[a], list[b] = list[b], list[a]
-    return list
+
 
 
 def bubbleSort(x):
@@ -147,8 +148,7 @@ def bubbleSort(x):
                 x[i] = x[j]
                 x[j] = temp
                 swapped = True
-    return x
-    # print(i, x)
+
 
 
 # [amotz] copy_of_list takes a list as an argument and return a copy of the list. first it creates a list with the same number of empty elements as the argument list.
@@ -173,8 +173,7 @@ __test_copy()
 
 def __test_sort_function_on_list(sort_function, list):
     copyoflist = __copy_of_list(list)
-    print ("is copy of list the same object as list?", copyoflist is list)
-    list = sort_function(list)
+    sort_function(list)
     if sorted(copyoflist) == list:
         return True
     else:
@@ -183,8 +182,6 @@ def __test_sort_function_on_list(sort_function, list):
 
 def __test_sort_function_on_list1(sort_function, list):
     copyoflist = __copy_of_list(list)
-    print ("is copyoflist the same object as list?", copyoflist is list)
-    list = sort_function(list)
     if sorted(copyoflist) == list:
         return True
     else:
@@ -209,7 +206,7 @@ def __testing_sort_functions():
                      [6, 8, 8, 5, 4, 3],
                      [8, 6, 6, 6, 9, 3, 2, 1, 2]]
         for testcase in testcases:
-            print ("testcase is", testcase, "out", sortfunction(testcase), "testcase for", sortfunction.__name__)
+            print (testcase,sortfunction.__name__)
             assert (__test_sort_function_on_list(sortfunction, testcase))
 
 
